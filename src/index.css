@@ -97,5 +97,12 @@
 
   body {
     @apply bg-background text-foreground;
+    /* Add the gradient background directly to the body */
+    background: linear-gradient(135deg, #ffffff 0%, #f3f0ff 50%, #fff0f9 100%);
+  }
+
+  /* Dark mode gradient */
+  .dark body {
+    background: linear-gradient(135deg, #0f0f0f 0%, #1a1a2e 50%, #1a1a1a 100%);
   }
 }
