@@ -15,27 +15,17 @@ const ChatBox: FC = () => {
       // Handle message submission
       setMessage('');
     }
-  };
-  
-  
-  function buildLesson() {} 
-  useEffect(() => {
     fetch("http://localhost:5000/generate_lesson", { method: "GET" })
       .then((res) => {
         return res.json();
       })
       .then((data) => {
-        if(firstUpdate.current) {
-          firstUpdate.current = false;
-          return;
-        }
-        console.log(data.content);
         setText(data.content);
       })
       .catch((_err) => {
 
       })
-  }, [buildLesson]);
+  };
 
   return (
     <div className="w-full max-w-lg mx-auto bg-gradient-to-br from-[#ffffff] to-[#f8f9fa] rounded-xl shadow-xl overflow-hidden border border-[#e9ecef]/40 backdrop-blur-sm">
@@ -58,7 +48,6 @@ const ChatBox: FC = () => {
           className="flex-1 bg-white/70 border-[#e9ecef] focus:border-purple-400 focus:ring-purple-400/30"
         />
         <Button 
-          onSubmit={buildLesson}     
           type="submit" 
           size="icon"
           className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 transition-all duration-300 shadow-md hover:shadow-lg"
