@@ -34,8 +34,8 @@ async function generateQuiz(lessonData) {
 }
 
 // Function to generate a mock quiz when API is not available
-function generateMockQuiz(name, lesson) {
-  // Extract some keywords from the lesson for more relevant mock questions
+ function generateMockQuiz(name, lesson) {
+//   // Extract some keywords from the lesson for more relevant mock questions
   const keywords = lesson.split(/\s+/).filter(word => word.length > 5).slice(0, 10);
   
   // Create a simple mock quiz based on the name and extracted keywords

@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react"
 import { Check, AlertCircle, X } from "lucide-react"
 import { motion } from "framer-motion"
-import { cn } from "@/lib/utils"
+import { cn } from "./lib/utils"
 import { loadQuizData, QuizQuestion } from "./utils/quizLoader"
 
 interface QuizProps {
