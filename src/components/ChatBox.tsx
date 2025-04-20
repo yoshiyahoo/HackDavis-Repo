@@ -26,15 +26,15 @@ const ChatBox: FC = () => {
       })
       .then((data) => {
         setText(data.responce);
+        fetch("http://127.0.0.1:5000/lessons", { 
+          method: "POST",
+          body: message
+        })
       })
       .catch((_err) => {
 
       });
 
-    fetch("http://127.0.0.1:5000/lessons", { 
-      method: "POST",
-      body: message
-    })
       
     /*
     fetch ("http://127.0.0.1:5000/lessons", {
