@@ -107,3 +107,32 @@ def lessons():
             del lesson["_id"]
             lessons.append(lesson)
         return jsonify(lessons)
+
+# "action": "tts" | "record" | "record_stop" | "play"
+# "data": "text to be converted to speech" | "filename"
+@app.route("/voice", methods=["POST"])
+def voice():
+    # Get the data from the request
+    data = request.get_json(force=True)
+    if not data or "action" not in data:
+        return "Invalid request data", 400
+    
+    if data["action"] == "tts":
+        # Get the text to be converted to speech
+        return tts(data["data"]), 200
+    elif data["action"] == "record":
+        # Start the recording
+        global stop_event
+        stop_event.clear()
+        return speech_to_text(), 200
+    elif data["action"] == "record_stop":
+        # Stop the recording
+        stop_event.set()
+        return "success", 200
+    elif data["action"] == "play":
+        # Play the audio
+        filename = data["data"]
+        play_audio(filename)
+        return "success", 200
+    else:
+        return "Invalid action", 400
