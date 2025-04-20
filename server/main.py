@@ -3,13 +3,13 @@ from flask_cors import CORS
 import requests
 import uuid
 import json
-from google.generativeai import genai
 import os
 from dotenv import load_dotenv
 import markdown
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
 from elevenlabs_func import *
+from letta import get_response
 
 # Load environment variables
 load_dotenv()
@@ -47,9 +47,6 @@ lessons_collection = db["lessons"]
 # Get the Mac Address from the device
 unique_id = hex(uuid.getnode())
 
-# Get the google genai client
-ai_client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
-
 
 # Setup the routes
 app = Flask(__name__)
@@ -64,16 +61,15 @@ ai_query = ""
 @app.route("/generate_lesson", methods=["GET", "POST"])
 def build_lesson():
     global ai_query
-    from letta import get_response
     if request.method == "POST":
         ai_query = request.get_data(as_text=True)
-        print(ai_query)
         return {
             "responce": ""
         }
-    if request.method == "GET": 
-        responce2 = get_response(ai_query)
-        html = markdown.markdown(responce2.text)
+    if request.method == "GET":
+        response2 = get_response(ai_query)
+        print(response2)
+        html = markdown.markdown(response2)
         return {
             "responce": html
         }

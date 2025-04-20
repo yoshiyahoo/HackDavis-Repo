@@ -25,7 +25,3 @@ def get_response(prompt):
     for message in response.messages:
         if message.message_type == "assistant_message":
             return message.dict()["content"]
-
-
-
-
