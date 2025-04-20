@@ -14,24 +14,19 @@ load_dotenv()
 
 # Gotta use the db connection
 db_uri = os.getenv("MONGO_URI")
-
+db_client = MongoClient(db_uri, server_api=ServerApi("1"))
 
 # Get the Mac Address from the device
 unique_id = hex(uuid.getnode())
 
 # Get the google genai client
-client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
+ai_client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
 
 # Setup the routes
 app = Flask(__name__)
 
 # Make sure to enable CORS
 cors = CORS(app)
-
-
-@app.route("/")
-def main():
-    return "hello world"
 
 
 gemini_query = ""
@@ -47,7 +42,7 @@ def build_lesson():
             "responce": ""
         }
     if request.method == "GET":
-        responce2 = client.models.generate_content(
+        responce2 = ai_client.models.generate_content(
             model="gemini-2.0-flash",
             contents=f"Explain {gemini_query} in some depth"
         )
@@ -57,9 +52,12 @@ def build_lesson():
         }
 
 
-# Use MONGO DB for this part, but for now this works
-
-
 @app.route("/get_lessons", methods=["GET", "PUSH"])
 def give_name():
-    pass
+    if request.method == "GET":
+        try:
+            db_client.admin.command("ping")
+        except Exception as e:
+            print(f"Error Here: {e}")
+            return "failure"
+    return "successful"
