@@ -58,23 +58,21 @@ app = Flask(__name__)
 cors = CORS(app)
 
 # Store the gemini query temporarily
-gemini_query = ""
+ai_query = ""
 
 
 @app.route("/generate_lesson", methods=["GET", "POST"])
 def build_lesson():
-    global gemini_query
+    global ai_query
+    from letta import get_response
     if request.method == "POST":
-        gemini_query = request.get_data(as_text=True)
-        print(gemini_query)
+        ai_query = request.get_data(as_text=True)
+        print(ai_query)
         return {
             "responce": ""
         }
-    if request.method == "GET":
-        responce2 = ai_client.models.generate_content(
-            model="gemini-2.0-flash",
-            contents=f"Explain {gemini_query} in some depth"
-        )
+    if request.method == "GET": 
+        responce2 = get_response(ai_query)
         html = markdown.markdown(responce2.text)
         return {
             "responce": html
@@ -89,18 +87,4 @@ def test_db_connection():
         print(f"Error Here: {e}")
         return "failure"
     return "successful"
-
-
-@app.route("/lessons", methods=["GET", "POST"])
-def lessons():
-    if request.method == "POST":
-        # Lesson will come in as a string
-        lesson = request.get_data(as_text=True)
-        lessons_collection.insert_one({
-            "user
-        })
-        return ""
-    if request.method == "GET":
-        lessons = lessons_collection.find({"userID": unique_id})
-        return lessons
 
