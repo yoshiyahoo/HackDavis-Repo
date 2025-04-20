@@ -1,0 +1,42 @@
+[
+  {
+    "question": "What is the main topic of this lesson?",
+    "choices": [
+      "JavaScript programming",
+      "Linked Lists",
+      "Database management",
+      "Network security"
+    ],
+    "correctAnswer": 1
+  },
+  {
+    "question": "Which of the following best describes Linked Lists?",
+    "choices": [
+      "A programming language",
+      "A database system",
+      "Linked",
+      "A network protocol"
+    ],
+    "correctAnswer": 2
+  },
+  {
+    "question": "What is a key advantage of Linked Lists?",
+    "choices": [
+      "fundamental",
+      "Static typing",
+      "Automatic garbage collection",
+      "Built-in encryption"
+    ],
+    "correctAnswer": 0
+  },
+  {
+    "question": "Which operation is commonly performed with Linked Lists?",
+    "choices": [
+      "Compilation",
+      "Decompression",
+      "structure",
+      "Encryption"
+    ],
+    "correctAnswer": 2
+  }
+]

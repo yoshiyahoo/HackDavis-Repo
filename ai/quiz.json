@@ -1,0 +1,72 @@
+[
+  {
+    "question": "What is the primary purpose of lesson content?",
+    "choices": [
+      "To confuse the reader.",
+      "To entertain the reader with irrelevant information.",
+      "To provide information and facilitate learning.",
+      "To fill space on a page."
+    ],
+    "correctAnswer": 2
+  },
+  {
+    "question": "When encountering new lesson content, what is a good initial approach?",
+    "choices": [
+      "Skip to the end.",
+      "Read quickly without thinking.",
+      "Skim for keywords and main ideas.",
+      "Assume you already know everything."
+    ],
+    "correctAnswer": 2
+  },
+  {
+    "question": "What is meant by the word 'sample'?",
+    "choices": [
+      "Largest possible quantity",
+      "Exists only in the imaginary world",
+      "A quantity or value used for testing or analysis",
+      "Meant to be confusing"
+    ],
+    "correctAnswer": 2
+  },
+  {
+    "question": "What does it mean to 'test' something?",
+    "choices": [
+      "To break something",
+      "To examine the functionality or capabilities of something.",
+      "To ignore something",
+      "To avoid using something"
+    ],
+    "correctAnswer": 1
+  },
+  {
+    "question": "Why is understanding the 'topic' important?",
+    "choices": [
+      "It is not important.",
+      "To create confusion",
+      "To avoid information",
+      "It provides a focus for learning and understanding."
+    ],
+    "correctAnswer": 3
+  },
+  {
+    "question": "After reviewing lesson content, what should you ask yourself?",
+    "choices": [
+      "\"What did I *not* learn?\"",
+      "\"What irrelevant information can I recall?\"",
+      "\"What are the main ideas and how do they connect?\"",
+      "\"How quickly can I forget this?\""
+    ],
+    "correctAnswer": 2
+  },
+  {
+    "question": "In what context are the words 'purposes', 'initial', 'facilitate' used?",
+    "choices": [
+      "Testing",
+      "Lesson Content",
+      "Breaking",
+      "Ignoring"
+    ],
+    "correctAnswer": 1
+  }
+]
