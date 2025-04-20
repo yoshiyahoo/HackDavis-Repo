@@ -11,14 +11,14 @@ const ChatBox: FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    fetch("http://localhost:5000/generate_lesson", {
+    fetch("http://127.0.0.1:5000/generate_lesson", {
       method: "POST",
       body: message
     })
       .then(() => {
         setText("thinking...")
       });
-    fetch("http://localhost:5000/generate_lesson", { 
+    fetch("http://127.0.0.1:5000/generate_lesson", { 
       method: "GET",
     })
       .then((res) => {
@@ -31,13 +31,13 @@ const ChatBox: FC = () => {
 
       });
 
-    fetch("http://localhost:5000/lessons", { 
+    fetch("http://127.0.0.1:5000/lessons", { 
       method: "POST",
       body: message
     })
       
     /*
-    fetch ("http://localhost:5000/lessons", {
+    fetch ("http://127.0.0.1:5000/lessons", {
       method: "GET"
     })
       .then((res) => {

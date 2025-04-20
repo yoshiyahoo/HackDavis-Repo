@@ -25,7 +25,7 @@ const Sidebar: FC<SidebarProps> = ({ isOpen, onClose, onLessonSelect }) => {
 
   // This is unoptimized garbage, not sure how to hook this with the ChatBox, but this will be fixed at some point
   useEffect(() => {
-    fetch ("http://localhost:5000/lessons", {method: "GET"})
+    fetch ("http://127.0.0.1:5000/lessons", {method: "GET"})
       .then((res) => {
         return res.json()
       })
