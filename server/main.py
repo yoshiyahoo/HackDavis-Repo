@@ -11,6 +11,29 @@ from pymongo.server_api import ServerApi
 
 # Load environment variables
 load_dotenv()
+from elevenlabs_func import *
+
+# Get the perplexity URL
+url = "https://api.perplexity.ai/chat/completions"
+
+
+# This is the format in JSON to send to the website that
+payload = {
+    "model": "sonar-pro",
+    "messages": [
+        {
+            "role": "user",
+            "content": "Write me a small story"
+        }
+    ],
+    "max_tokens": 300
+}
+headers = {
+    "Authorization": "Bearer <apiKey>",
+    "Content-type": "Application/json",
+}
+
+response = requests.post(url, json=payload, headers=headers)
 
 # Gotta use the db connection
 db_uri = os.getenv("MONGO_URI")
@@ -21,6 +44,7 @@ unique_id = hex(uuid.getnode())
 
 # Get the google genai client
 ai_client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
+
 
 # Setup the routes
 app = Flask(__name__)
