@@ -1,8 +1,8 @@
-
-import { FC } from 'react';
-import { ArrowLeft, BookOpenText } from 'lucide-react';
+import { FC, useState } from 'react';
+import { ArrowLeft, BookOpenText, X } from 'lucide-react';
 import { Button } from './ui/button';
 import { Separator } from './ui/separator';
+import Quiz from '../Quiz'; // Make sure this import path is correct
 
 interface LessonPageProps {
   lesson: {
@@ -14,8 +14,14 @@ interface LessonPageProps {
 }
 
 const LessonPage: FC<LessonPageProps> = ({ lesson, onBack }) => {
+  const [showQuiz, setShowQuiz] = useState(false);
+
+  const handleQuizToggle = () => {
+    setShowQuiz((prev) => !prev);
+  };
+
   return (
-    <div className="h-full w-full">
+    <div className="h-full w-full relative">
       {/* Header with back button */}
       <div className="sticky top-0 z-10 bg-background/80 backdrop-blur-lg border-b">
         <div className="container mx-auto px-4 h-16 flex items-center gap-4">
@@ -36,7 +42,6 @@ const LessonPage: FC<LessonPageProps> = ({ lesson, onBack }) => {
       {/* Main content area */}
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-3xl mx-auto space-y-8">
-          {/* Assistant message - lesson introduction */}
           <div className="flex gap-4 p-6 bg-white/5 backdrop-blur-lg rounded-xl border border-white/10">
             <div className="flex-shrink-0">
               <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center">
@@ -44,20 +49,15 @@ const LessonPage: FC<LessonPageProps> = ({ lesson, onBack }) => {
               </div>
             </div>
             <div className="flex-grow space-y-4">
-              <p className="text-lg leading-relaxed">
-                {lesson.description}
-              </p>
+              <p className="text-lg leading-relaxed">{lesson.description}</p>
               <div className="flex flex-col sm:flex-row gap-4">
-                <Button 
-                  className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 transition-all duration-300 shadow-lg hover:shadow-xl"
-                  onClick={() => console.log('Playing audio for:', lesson.title)}
-                >
+                <Button className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 transition-all duration-300 shadow-lg hover:shadow-xl">
                   Play Audio Lesson
                 </Button>
-                <Button 
+                <Button
                   variant="outline"
                   className="border-white/20 hover:bg-white/10"
-                  onClick={() => console.log('Starting quiz for:', lesson.title)}
+                  onClick={handleQuizToggle}
                 >
                   Take Quiz
                 </Button>
@@ -67,7 +67,6 @@ const LessonPage: FC<LessonPageProps> = ({ lesson, onBack }) => {
 
           <Separator className="opacity-10" />
 
-          {/* Small chat box at the bottom */}
           <div className="fixed bottom-0 left-0 right-0 p-4 bg-background/80 backdrop-blur-lg border-t">
             <div className="max-w-3xl mx-auto">
               <input
@@ -79,6 +78,11 @@ const LessonPage: FC<LessonPageProps> = ({ lesson, onBack }) => {
           </div>
         </div>
       </div>
+
+      {/* Quiz Popup */}
+      {showQuiz && (
+        <Quiz onClose={handleQuizToggle} title={`${lesson.title} Quiz`} />
+      )}
     </div>
   );
 };
