@@ -1,73 +1,28 @@
-# Welcome to your Lovable project
+# Easy Learn
+## Inspiration
+People have busy lives and do not always have time to educate themselves. We needed a fast platform to help keep ourselves more broadly educated easily and flexibly. We also wanted to give people with less reading comprehension skills more educational resources.
 
-## Project info
+## What it does
+Easy Learn uses Letta AI as a research assistant. You type in the topic you want to discuss, and the program will generate a ready lesson plan. After interacting with the chatbot, you can take a quiz to assess your progress and make improvements. You can also voice chat with Easy Learn, and it will speak to the user with the generated output from Letta AI.
 
-**URL**: https://lovable.dev/projects/2b6ace0b-22ea-40da-a305-e2a72912d4ae
+## How we built it
+We built our backend using the Flask Framework in Python to connect to MongoDB.
+The frontend was written in React.
+The voice model is with Eleven Labs.
 
-## How can I edit this code?
+## Challenges we ran into
+We encountered several challenges.
+The main problem was linking the various components, such as the text-to-speech, the MongoDB, many React components, and the AI compatibility. These pieces had different interfaces and ways of exchanging state, and we struggled to figure out how each of these parts talked to one another.
 
-There are several ways of editing your application.
+The second challenge was sleep deprivation. We stayed up all night working, constantly making mistakes and getting set back because we couldn't concentrate. Twenty-four hours was a real time crunch for us to build all of these components together
 
-**Use Lovable**
+A third challenge was organization. We did not have a virtual environment like a Docker container, costing us time exchanging API keys and setting libraries.
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/2b6ace0b-22ea-40da-a305-e2a72912d4ae) and start prompting.
+## Accomplishments that we're proud of
+We built each component standalone: the MongoDB, the text-to-speech, the React frontend, and the Flask backend. We all sharpened our web development and teamwork skills, putting our limited knowledge to the test.  
 
-Changes made via Lovable will be committed automatically to this repo.
+## What we learned
+This experience taught us tons. We learned more about how React works on the frontend, how to use API keys and manage environment variables, how to hook a database like MongoDB to the Flask backend, and how to set up routes between the three pieces of our program. We saw how frustrating it was to have different software versions and not have all the necessary libraries installed and ready to go out of the box. One system's backend server worked while the other one kept crashing. 
 
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
-
-**Edit a file directly in GitHub**
-
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
-
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/2b6ace0b-22ea-40da-a305-e2a72912d4ae) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+## What's next for Easy Learn
+We want to address the challenges in our project, including fully linking all aspects together, dockerizing our project to ensure everyone has the same environment, and utilizing better coding practices. 
