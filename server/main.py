@@ -58,6 +58,7 @@ cors = CORS(app)
 ai_query = ""
 ai_response = ""
 
+
 @app.route("/generate_lesson", methods=["GET", "POST"])
 def build_lesson():
     global ai_query
@@ -65,14 +66,14 @@ def build_lesson():
     if request.method == "POST":
         ai_query = request.get_data(as_text=True)
         return {
-            "responce": ""
+            "response": ""
         }
     if request.method == "GET":
         response2 = get_response(ai_query)
         ai_response = response2
         html = markdown.markdown(ai_response)
         return {
-            "responce": html
+            "response": html
         }
 
 
@@ -110,3 +111,17 @@ def lessons():
             del lesson["_id"]
             lessons.append(lesson)
         return jsonify(lessons)
+
+
+@app.get("/get_lesson")
+def get_lesson():
+    lesson_title = request.get_data(as_text=True)
+    if len(lessons_collection.find({"title": lesson_title.strip()}).to_list()) != 0:
+        lesson = lessons_collection.find_one({"title": lesson_title.strip()})
+        del lesson["_obj"]
+        html = markdown.markdown(lesson["initial_response"])
+        return {
+            "response": html
+        }
+    else:
+        return ""
