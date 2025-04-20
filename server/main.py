@@ -2,6 +2,7 @@ from flask import Flask, request
 from flask_cors import CORS
 import requests
 import uuid
+import json
 from google import genai
 import os
 from dotenv import load_dotenv
@@ -16,6 +17,10 @@ load_dotenv()
 db_uri = os.getenv("MONGO_URI")
 db_client = MongoClient(db_uri, server_api=ServerApi("1"))
 
+db = db_client["HackDavisData"]
+
+lessons_collection = db["lessons"]
+
 # Get the Mac Address from the device
 unique_id = hex(uuid.getnode())
 
@@ -28,7 +33,7 @@ app = Flask(__name__)
 # Make sure to enable CORS
 cors = CORS(app)
 
-
+# Store the gemini query temporarily
 gemini_query = ""
 
 
@@ -52,12 +57,26 @@ def build_lesson():
         }
 
 
-@app.route("/get_lessons", methods=["GET", "PUSH"])
-def give_name():
-    if request.method == "GET":
-        try:
-            db_client.admin.command("ping")
-        except Exception as e:
-            print(f"Error Here: {e}")
-            return "failure"
+@app.route("/test_db_connection")
+def test_db_connection():
+    try:
+        db_client.admin.command("ping")
+    except Exception as e:
+        print(f"Error Here: {e}")
+        return "failure"
     return "successful"
+
+
+@app.route("/lessons", methods=["GET", "POST"])
+def lessons():
+    if request.method == "POST":
+        # Lesson will come in as a string
+        lesson = request.get_data(as_text=True)
+        lessons_collection.insert_one({
+            "user
+        })
+        return ""
+    if request.method == "GET":
+        lessons = lessons_collection.find({"userID": unique_id})
+        return lessons
+
