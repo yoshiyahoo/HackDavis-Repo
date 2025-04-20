@@ -6,32 +6,14 @@ from google import genai
 import os
 from dotenv import load_dotenv
 import markdown
+from pymongo.mongo_client import MongoClient
+from pymongo.server_api import ServerApi
 
 # Load environment variables
 load_dotenv()
 
-# Get the perplexity URL
-url = "https://api.perplexity.ai/chat/completions"
-
-
-# This is the format in JSON to send to the website that
-# This was perplexity
-payload = {
-    "model": "sonar-pro",
-    "messages": [
-        {
-            "role": "user",
-            "content": "Write me a small story"
-        }
-    ],
-    "max_tokens": 300
-}
-headers = {
-    "Authorization": "Bearer <apiKey>",
-    "Content-type": "Application/json",
-}
-
-responce = requests.post(url, json=payload, headers=headers)
+# Gotta use the db connection
+db_uri = os.getenv("MONGO_URI")
 
 
 # Get the Mac Address from the device
@@ -67,7 +49,7 @@ def build_lesson():
     if request.method == "GET":
         responce2 = client.models.generate_content(
             model="gemini-2.0-flash",
-            contents=f"Explain how {gemini_query} works"
+            contents=f"Explain {gemini_query} in some depth"
         )
         html = markdown.markdown(responce2.text)
         return {
@@ -75,6 +57,9 @@ def build_lesson():
         }
 
 
-@app.route("/<name>")
-def give_name(name):
-    return f"Hi {name}"
+# Use MONGO DB for this part, but for now this works
+
+
+@app.route("/get_lessons", methods=["GET", "PUSH"])
+def give_name():
+    pass
