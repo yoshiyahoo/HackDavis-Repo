@@ -24,7 +24,7 @@ def play_tts(text):
     text=text,
     voice_id="LcfcDJNUP1GQjkzn1xUU",
     model_id="eleven_multilingual_v2",
-    output_format="mp3_44100_128",
+    output_format="mp3_48000_128",
   )
 
   play(audio)
