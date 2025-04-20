@@ -3,7 +3,7 @@ from flask_cors import CORS
 import requests
 import uuid
 import json
-from google import genai
+from google.generativeai import genai
 import os
 from dotenv import load_dotenv
 import markdown
