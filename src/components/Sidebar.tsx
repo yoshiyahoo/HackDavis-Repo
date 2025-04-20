@@ -1,15 +1,15 @@
-
-import { FC } from 'react';
+import { FC, useEffect, useState, useContext } from 'react';
 import LessonItem from './LessonItem';
+// import { LessonsContext } from './LessonGlobalState'
 
 interface SidebarProps {
   isOpen: boolean;
   onClose: () => void;
-  onLessonSelect: (lesson: { id: number; title: string; description: string }) => void;
+  onLessonSelect: (lesson: { title: string }) => void;
 }
 
 // Example lessons data - in a real app, this would come from your backend
-const lessons = [
+const lessons_lkat = [
   { id: 1, title: "Introduction to AI", description: "Learn the basics of Artificial Intelligence" },
   { id: 2, title: "Machine Learning Basics", description: "Understand fundamental concepts of ML" },
   { id: 3, title: "Neural Networks", description: "Deep dive into neural networks" },
@@ -21,6 +21,22 @@ const completedLessons = [
 ];
 
 const Sidebar: FC<SidebarProps> = ({ isOpen, onClose, onLessonSelect }) => {
+  const [ lessons, setLessons ] = useState([])
+
+  // This is unoptimized garbage, not sure how to hook this with the ChatBox, but this will be fixed at some point
+  useEffect(() => {
+    fetch ("http://localhost:5000/lessons", {method: "GET"})
+      .then((res) => {
+        return res.json()
+      })
+      .then((data) => {
+        setLessons(data);
+      })
+      .catch((_err) => {
+
+      })
+  }, [])
+    
   return (
     <>
       {isOpen && (
@@ -39,7 +55,6 @@ const Sidebar: FC<SidebarProps> = ({ isOpen, onClose, onLessonSelect }) => {
             <div className="mt-4 space-y-1">
               {lessons.map((lesson) => (
                 <LessonItem
-                  key={lesson.id}
                   title={lesson.title}
                   onClick={() => onLessonSelect(lesson)}
                 />
@@ -52,10 +67,8 @@ const Sidebar: FC<SidebarProps> = ({ isOpen, onClose, onLessonSelect }) => {
             <div className="mt-2 space-y-1">
               {completedLessons.map((lesson) => (
                 <LessonItem
-                  key={lesson.id}
                   title={lesson.title}
                   completed
-                  progress={lesson.progress}
                   onClick={() => onLessonSelect(lesson)}
                 />
               ))}

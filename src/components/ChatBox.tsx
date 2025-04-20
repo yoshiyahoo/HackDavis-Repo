@@ -1,13 +1,13 @@
-
-import { FC, useState, useEffect, useRef } from 'react';
+import { FC, useContext, useState } from 'react';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Send } from 'lucide-react';
+import { LessonsContext } from './LessonGlobalState';
 
 const ChatBox: FC = () => {
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState("");
   const [text, setText] = useState("");
-  const firstUpdate = useRef(true);
+  //const { setLessons } = useContext(LessonsContext)
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -31,6 +31,25 @@ const ChatBox: FC = () => {
 
       });
 
+    fetch("http://localhost:5000/lessons", { 
+      method: "POST",
+      body: message
+    })
+      
+    /*
+    fetch ("http://localhost:5000/lessons", {
+      method: "GET"
+    })
+      .then((res) => {
+        return res.json()
+      })
+      .then((data) => {
+        setLessons(data);
+      })
+      .catch((_err) => {
+
+      })
+    */
     if (message.trim()) {
       // Handle message submission
       setMessage('');

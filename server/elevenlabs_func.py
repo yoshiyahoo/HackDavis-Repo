@@ -66,13 +66,13 @@ def callback(indata, frames_count, time_info, status):
     q.put(indata.copy())
 
 def record_stream():
-  with sd.InputStream(samplerate=fs, channels=channels, callback=callback):
-    start_time = time.time()
-    while not stop_event.is_set():
-      if time.time() - start_time > max_duration:
-        break
-      try:
-        data = q.get(timeout=1)
-        frames.append(data)
-      except queue.Empty:
-        pass
+    with sd.InputStream(samplerate=fs, channels=channels, callback=callback):
+        start_time = time.time()
+        while not stop_event.is_set():
+            if time.time() - start_time > max_duration:
+                break
+            try:
+                data = q.get(timeout=1)
+                frames.append(data)
+            except queue.Empty:
+                pass

@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, jsonify
 from flask_cors import CORS
 import requests
 import uuid
@@ -9,10 +9,10 @@ from dotenv import load_dotenv
 import markdown
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
+from elevenlabs_func import *
 
 # Load environment variables
 load_dotenv()
-from elevenlabs_func import *
 
 # Get the perplexity URL
 url = "https://api.perplexity.ai/chat/completions"
@@ -40,8 +40,8 @@ response = requests.post(url, json=payload, headers=headers)
 db_uri = os.getenv("MONGO_URI")
 db_client = MongoClient(db_uri, server_api=ServerApi("1"))
 
+# Get the table from the database
 db = db_client["HackDavisData"]
-
 lessons_collection = db["lessons"]
 
 # Get the Mac Address from the device
@@ -67,9 +67,7 @@ def build_lesson():
     if request.method == "POST":
         gemini_query = request.get_data(as_text=True)
         print(gemini_query)
-        return {
-            "responce": ""
-        }
+        return ""
     if request.method == "GET":
         responce2 = ai_client.models.generate_content(
             model="gemini-2.0-flash",
@@ -95,12 +93,21 @@ def test_db_connection():
 def lessons():
     if request.method == "POST":
         # Lesson will come in as a string
-        lesson = request.get_data(as_text=True)
-        lessons_collection.insert_one({
-            "user
-        })
-        return ""
-    if request.method == "GET":
-        lessons = lessons_collection.find({"userID": unique_id})
-        return lessons
+        lesson_title = request.get_data(as_text=True)
+        data_to_enter = {
+            "userID": unique_id,
+            "title": lesson_title.strip(),
+            "completed": False
+        }
+        if len(lessons_collection.find({"title": lesson_title.strip()}).to_list()) != 0:
+            return ""
 
+        lessons_collection.insert_one(data_to_enter)
+        return ""  # After the data is entered, the dictionary is modified
+    if request.method == "GET":
+        lesson_cursor = lessons_collection.find({"userID": unique_id})
+        lessons = []
+        for lesson in lesson_cursor:
+            del lesson["_id"]
+            lessons.append(lesson)
+        return jsonify(lessons)

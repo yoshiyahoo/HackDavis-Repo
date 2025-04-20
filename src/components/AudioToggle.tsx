@@ -1,4 +1,3 @@
-
 import { FC, useState } from 'react';
 import { Volume, VolumeX } from 'lucide-react';
 import { Button } from './ui/button';
