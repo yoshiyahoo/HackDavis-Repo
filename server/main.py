@@ -3,13 +3,13 @@ from flask_cors import CORS
 import requests
 import uuid
 import json
-from google import genai
 import os
 from dotenv import load_dotenv
 import markdown
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
 from elevenlabs_func import *
+from letta import get_response
 
 # Load environment variables
 load_dotenv()
@@ -47,9 +47,6 @@ lessons_collection = db["lessons"]
 # Get the Mac Address from the device
 unique_id = hex(uuid.getnode())
 
-# Get the google genai client
-ai_client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
-
 
 # Setup the routes
 app = Flask(__name__)
@@ -59,21 +56,21 @@ cors = CORS(app)
 
 # Store the gemini query temporarily
 ai_query = ""
-
+ai_response = ""
 
 @app.route("/generate_lesson", methods=["GET", "POST"])
 def build_lesson():
     global ai_query
-    from letta import get_response
+    global ai_response
     if request.method == "POST":
         ai_query = request.get_data(as_text=True)
-        print(ai_query)
         return {
             "responce": ""
         }
-    if request.method == "GET": 
-        responce2 = get_response(ai_query)
-        html = markdown.markdown(responce2.text)
+    if request.method == "GET":
+        response2 = get_response(ai_query)
+        ai_response = response2
+        html = markdown.markdown(ai_response)
         return {
             "responce": html
         }
@@ -91,12 +88,14 @@ def test_db_connection():
 
 @app.route("/lessons", methods=["GET", "POST"])
 def lessons():
+    global ai_response
     if request.method == "POST":
         # Lesson will come in as a string
         lesson_title = request.get_data(as_text=True)
         data_to_enter = {
             "userID": unique_id,
             "title": lesson_title.strip(),
+            "initial_response": ai_response,
             "completed": False
         }
         if len(lessons_collection.find({"title": lesson_title.strip()}).to_list()) != 0:
