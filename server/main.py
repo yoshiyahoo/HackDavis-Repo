@@ -2,6 +2,7 @@ from flask import Flask
 from flask_cors import CORS
 import requests
 import uuid
+from elevenlabs_func import *
 
 # Get the perplexity URL
 url = "https://api.perplexity.ai/chat/completions"
@@ -23,11 +24,12 @@ headers = {
     "Content-type": "Application/json",
 }
 
-responce = requests.post(url, json=payload, headers=headers)
+response = requests.post(url, json=payload, headers=headers)
 
 
 # Get the Mac Address from the device
 unique_id = hex(uuid.getnode())
+
 
 
 # Setup the routes
