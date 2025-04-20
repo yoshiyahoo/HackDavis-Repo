@@ -155,9 +155,17 @@ async function main() {
     // Output the structured quiz
     console.log(JSON.stringify(quizQuestions, null, 2));
     
-    // Save to a file
+    // Save to a file in the root directory
     await fs.writeFile('quiz.json', JSON.stringify(quizQuestions, null, 2));
-    console.log('Quiz generated and saved to quiz.json');
+    
+    // Also save to the public directory for frontend access
+    try {
+      await fs.writeFile('public/quiz.json', JSON.stringify(quizQuestions, null, 2));
+      console.log('Quiz generated and saved to quiz.json and public/quiz.json');
+    } catch (error) {
+      console.error('Error saving to public directory:', error.message);
+      console.log('Quiz generated and saved to quiz.json only');
+    }
   } catch (error) {
     console.error('Error in main process:', error);
   }
